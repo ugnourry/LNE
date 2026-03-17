@@ -160,156 +160,26 @@
             40%, 80% { transform: translateX(5px); }
         }
 
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        .dashboard.active {
-            display: flex;
-        }
-
-        .dashboard-header {
-            background: white;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 1px 3px var(--shadow);
-        }
-
-        .dashboard-logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
-        .logout-btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            font-family: inherit;
-            background: transparent;
-            color: var(--muted);
-            border: 1.5px solid var(--border);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .dashboard-content {
-            flex: 1;
-            padding: 1.5rem;
-            background: var(--paper);
-        }
-
-        .report-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px var(--shadow);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            height: calc(100vh - 140px);
-        }
-
-        .report-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .report-title {
-            font-family: 'Fraunces', serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--ink);
-        }
-
-        .report-meta {
-            font-size: 0.8rem;
-            color: var(--muted);
-        }
-
-        .powerbi-frame {
-            width: 100%;
-            height: calc(100% - 60px);
-            border: none;
-        }
-
         @media (max-width: 768px) {
             .login-card {
                 padding: 2rem;
-            }
-
-            .dashboard-header {
-                padding: 1rem;
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .header-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .dashboard-content {
-                padding: 1rem;
-            }
-
-            .report-container {
-                height: calc(100vh - 180px);
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container" id="loginPage">
+    <div class="login-container">
         <div class="login-card">
             <div class="login-header">
                 <div class="login-logo">
                     <img src="logo.png" alt="Les Nouveaux Editeurs" onerror="this.style.display='none'">
                 </div>
                 <div class="login-title">Les Nouveaux Editeurs</div>
-                <p class="login-subtitle">Accedez a vos tableaux de bord</p>
+                <p class="login-subtitle">Accédez à vos tableaux de bord</p>
             </div>
 
             <div class="error-message" id="errorMessage">
-                Identifiants incorrects. Veuillez reessayer.
+                Identifiants incorrects. Veuillez réessayer.
             </div>
 
             <form id="loginForm">
@@ -328,34 +198,10 @@
         </div>
     </div>
 
-    <div class="dashboard" id="dashboardPage">
-        <header class="dashboard-header">
-            <div class="dashboard-logo">
-                <img src="logo.png" alt="Les Nouveaux Editeurs" onerror="this.style.display='none'">
-            </div>
-            <div class="header-right">
-                <div class="user-info">
-                    <div class="user-avatar" id="userAvatar">L</div>
-                    <span id="userName">LNE</span>
-                </div>
-                <button class="logout-btn" id="logoutBtn">Deconnexion</button>
-            </div>
-        </header>
-
-        <main class="dashboard-content">
-            <div class="report-container">
-                <div class="report-header">
-                    <span class="report-title">Rapport Power BI</span>
-                    <span class="report-meta">Mise a jour automatique</span>
-                </div>
-                <iframe id="powerbiFrame" class="powerbi-frame" src="https://app.powerbi.com/view?r=eyJrIjoiMTJkYWJjOTQtYjQyNC00ZWY1LWIxOTktYmZlMDk0N2Q3ZDEyIiwidCI6IjVlZWQ5ZjM2LTQ5NDctNDNhMS1hOTVjLWU0YmNlNTVkMmM5MCJ9"></iframe>
-            </div>
-        </main>
-    </div>
-
     <script>
         var VALID_USER = "lne";
         var VALID_HASH = "489fc18cb10d357b75d096901a2968f23322b3654f4c4a5c61980d7d68d9106d";
+        var REPORT_URL = "https://app.powerbi.com/view?r=eyJrIjoiMTJkYWJjOTQtYjQyNC00ZWY1LWIxOTktYmZlMDk0N2Q3ZDEyIiwidCI6IjVlZWQ5ZjM2LTQ5NDctNDNhMS1hOTVjLWU0YmNlNTVkMmM5MCJ9";
 
         function sha256(str) {
             var buffer = new TextEncoder().encode(str);
@@ -370,50 +216,19 @@
             });
         }
 
-        var loginPage = document.getElementById("loginPage");
-        var dashboardPage = document.getElementById("dashboardPage");
-        var loginForm = document.getElementById("loginForm");
-        var errorMessage = document.getElementById("errorMessage");
-        var logoutBtn = document.getElementById("logoutBtn");
-
-        function checkSession() {
-            if (sessionStorage.getItem("lne_user")) {
-                showDashboard();
-            }
-        }
-
-        function showDashboard() {
-            loginPage.style.display = "none";
-            dashboardPage.classList.add("active");
-        }
-
-        function hideDashboard() {
-            sessionStorage.removeItem("lne_user");
-            loginPage.style.display = "flex";
-            dashboardPage.classList.remove("active");
-            document.getElementById("username").value = "";
-            document.getElementById("password").value = "";
-        }
-
-        loginForm.addEventListener("submit", function(e) {
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
             var user = document.getElementById("username").value.toLowerCase().trim();
             var pass = document.getElementById("password").value;
 
             sha256(pass).then(function(hash) {
                 if (user === VALID_USER && hash === VALID_HASH) {
-                    sessionStorage.setItem("lne_user", "LNE");
-                    errorMessage.classList.remove("show");
-                    showDashboard();
+                    window.location.href = REPORT_URL;
                 } else {
-                    errorMessage.classList.add("show");
+                    document.getElementById("errorMessage").classList.add("show");
                 }
             });
         });
-
-        logoutBtn.addEventListener("click", hideDashboard);
-
-        checkSession();
     </script>
 </body>
 </html>
